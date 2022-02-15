@@ -74,9 +74,10 @@ namespace Patrimonio.Controllers
         // POST: api/Equipamentos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public IActionResult PostEquipamento(Equipamento equipamento, IFormFile arquivo)
+        public IActionResult PostEquipamento([FromForm] Equipamento equipamento, IFormFile arquivo)
         {
 
+            
             #region Upload da Imagem com extensões permitidas apenas
                 string[] extensoesPermitidas = { "jpg", "png", "jpeg", "gif" };
                 string uploadResultado = Upload.UploadFile(arquivo, extensoesPermitidas);

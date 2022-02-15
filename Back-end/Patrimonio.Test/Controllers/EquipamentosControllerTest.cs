@@ -1,13 +1,12 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Patrimonio.Controllers;
 using Patrimonio.Domains;
 using Patrimonio.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Patrimonio.Test.Controllers
@@ -28,13 +27,18 @@ namespace Patrimonio.Test.Controllers
                 NomePatrimonio = "patrimonioTeste",
                 DataCadastro = DateTime.Now,
                 Descricao = "Este é um teste",
-                Imagem = "ed41c37b-a105-4b51-9cb3-377065b5a643.png"
             };
 
             var controller = new EquipamentosController(fakeRepository.Object);
+
             //  Procedimento
+            var bytes = Encoding.UTF8.GetBytes("Esse é um arquivo de teste.");
+            IFormFile arquivo = new FormFile(new MemoryStream(bytes), 0, bytes.Length, "Data", "teste.png");
+
+            var resultado = controller.PostEquipamento(equipamentoFake, arquivo);
 
             //  Reusultado esperado
+            Assert.IsType<CreatedResult>(resultado);
 
         }
     }

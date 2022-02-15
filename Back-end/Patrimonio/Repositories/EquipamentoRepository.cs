@@ -28,7 +28,7 @@ namespace Patrimonio.Repositories
         public Equipamento Cadastrar(Equipamento equipamento)
         {
             ctx.Equipamentos.Add(equipamento);
-            ctx.SaveChangesAsync();
+            ctx.SaveChanges();
 
             return equipamento;
         }
@@ -39,14 +39,14 @@ namespace Patrimonio.Repositories
             ctx.SaveChangesAsync();
         }
 
-        public IEnumerable<Equipamento> Listar()
-        {
-            return ctx.Equipamentos.ToList();
-        }
-
         Equipamento IEquipamentoRepository.BuscarPorID(int id)
         {
             return ctx.Equipamentos.Find(id);
+        }
+
+        List<Equipamento> IEquipamentoRepository.Listar()
+        {
+            return ctx.Equipamentos.ToList();
         }
     }
 }
